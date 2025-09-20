@@ -1,40 +1,23 @@
-package com.payment.user.entity;
+package com.payment.user.dto;
 
+public class SignupRequest {
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "users")
-public class User {
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String name;
-
     private String email;
-
-    @Column(unique = true)
     private String password;
+    private String adminKey;
 
-    private String role;
-
-    public String getRole() {
-        return role;
+    public SignupRequest() {
+        // default constructor
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+    public SignupRequest(String name, String email, String password, String adminKey) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.adminKey = adminKey;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -44,6 +27,8 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+
 
     public String getEmail() {
         return email;
@@ -59,5 +44,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAdminKey() {
+        return adminKey;
     }
 }
