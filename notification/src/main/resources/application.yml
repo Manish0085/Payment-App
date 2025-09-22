@@ -20,6 +20,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
 
   kafka:
+    bootstrap-servers: localhost:9092
     consumer:
       group-id: notification-group
       auto-offset-reset: earliest

@@ -3,7 +3,6 @@ package com.payment.notification.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,7 +20,7 @@ public class Transaction {
     private Long receiverId;
 
     @Column(nullable = false)
-    @Positive(message = "Amount must be postivive")
+    @Positive(message = "Amount must be postive")
     private Double amount;
 
     @Column(nullable = false)

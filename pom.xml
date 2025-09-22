@@ -13,6 +13,7 @@
     <modules>
         <module>user</module>
         <module>transaction</module>
+        <module>notification</module>
 
 
         <!-- Add your other services here -->
