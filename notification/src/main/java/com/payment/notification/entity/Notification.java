@@ -13,7 +13,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userId;
+    private Long userId;
 
     private String message;
 
@@ -24,7 +24,7 @@ public class Notification {
 
     }
 
-    public Notification(Long id, String userId, String message, LocalDateTime sentAt) {
+    public Notification(Long id, Long userId, String message, LocalDateTime sentAt) {
         this.id = id;
         this.userId = userId;
         this.message = message;
@@ -39,11 +39,11 @@ public class Notification {
         this.id = id;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
