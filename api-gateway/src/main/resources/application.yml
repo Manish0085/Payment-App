@@ -1,0 +1,54 @@
+server:
+  port: 8080
+
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      routes:
+
+        # User Auth (signup/login)
+        - id: user
+          uri: http://localhost:8081
+          predicates:
+            - Path=/auth/**
+
+        # User Service
+        - id: user
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/users/**
+
+        # Transaction Service
+        - id: transaction
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/transactions/**
+
+        # Reward Service
+        - id: reward
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/rewards/**
+
+        # Notification Service
+        - id: notification
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/notifications/**
+
+
+
+
+
+  jwt:
+    secret: my-super-secret-key-that-you-never-share
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
