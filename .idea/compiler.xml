@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="reward" />
+        <module name="api-gateway" />
         <module name="notification" />
         <module name="user" />
         <module name="transaction" />
@@ -15,6 +16,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gateway" options="-parameters" />
       <module name="notification" options="-parameters" />
       <module name="reward" options="-parameters" />
       <module name="transaction" options="-parameters" />
