@@ -1,4 +1,4 @@
-package com.payment.reward;
+package com.payment.reward.kafka;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -6,7 +6,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.payment.reward.entity.Reward;
 import com.payment.reward.entity.Transaction;
 import com.payment.reward.repository.RewardRepository;
-import org.aspectj.weaver.tools.Trace;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
