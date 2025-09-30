@@ -16,6 +16,7 @@
         <module>notification</module>
         <module>reward</module>
         <module>api-gateway</module>
+        <module>common-entity</module>
 
 
         <!-- Add your other services here -->

@@ -17,9 +17,12 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
 
   kafka:
+    bootstrap-servers: localhost:9092
     consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: "com.payment.notification.entity"
-        spring.json.value.default.type: "com.payment.notification.entity.Transaction"
+        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: "com.paypal.common.entity.Transaction"

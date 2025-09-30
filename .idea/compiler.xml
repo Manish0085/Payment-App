@@ -7,12 +7,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="reward" />
-        <module name="api-gateway" />
         <module name="notification" />
+        <module name="common" />
+        <module name="api-gateway" />
         <module name="user" />
         <module name="transaction" />
+        <module name="common-entity" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common" target="17" />
+      <module name="common-pay" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
