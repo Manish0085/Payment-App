@@ -8,6 +8,7 @@ import io.jsonwebtoken.Jwts;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -51,12 +52,15 @@ public class JwtUtil {
                 .getSubject();
     }
 
-    public String generateToken(Map<String, Object> claims, String email){
+    public String generateToken(Long userId, String email, String role){
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", userId);
+        claims.put("role", role);
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(email)
+                .setSubject(email) // Still keeping email as subject for backward compatibility
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
                 .signWith(getSignedKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -70,4 +74,6 @@ public class JwtUtil {
                 .getBody()
                 .get("role");
     }
+
+
 }

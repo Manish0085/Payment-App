@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.paypal.reward.entity.Reward;
-import com.paypal.reward.entity.Transaction;
+import com.paypal.common.entity.Transaction;
 import com.paypal.reward.repository.RewardRepository;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;

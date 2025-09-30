@@ -16,7 +16,7 @@ spring:
       properties:
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
         spring.json.trusted.packages: "*"
-        spring.json.value.default.type: com.paypal.reward_service.entity.Transaction
+        spring.json.value.default.type: "com.paypal.common.entity.Transaction"
         spring.json.use.type.headers: false
 
     listener:
