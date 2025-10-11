@@ -1,46 +1,43 @@
 package com.paypal.user.controller;
 
 import com.paypal.user.constants.UserConstants;
-import com.paypal.user.dto.ResponseDto;
-import com.paypal.user.dto.UserDto;
+import com.paypal.user.dto.*;
+import com.paypal.user.entity.User;
+import com.paypal.user.repository.UserRepo;
 import com.paypal.user.service.IUserService;
+import com.paypal.user.util.JwtUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/users/")
 public class UserController {
 
-    private IUserService iUserService;
-
-    public UserController(IUserService iUserService){
-        this.iUserService = iUserService;
+    private IUserService userService;
+    public UserController(IUserService userService){
+        this.userService = userService;
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDto> createUser(@RequestBody UserDto userDto){
-        iUserService.createUser(userDto);
-        return ResponseEntity
-                .ok(new ResponseDto(UserConstants.STATUS_201, UserConstants.MESSAGE_201));
+    public ResponseEntity<User> createUser(@RequestBody User user){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long id){
-        UserDto user = iUserService.getUserById(id);
-        return ResponseEntity
-                .ok(user);
-
+    public ResponseEntity<User> getUserById(@PathVariable Long id){
+        return userService.getUserById((id)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserDto>> getAllUsers(@PathVariable Long id){
-        List<UserDto> users = iUserService.getAllUsers();
-        return ResponseEntity
-                .ok(users);
-
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
 }

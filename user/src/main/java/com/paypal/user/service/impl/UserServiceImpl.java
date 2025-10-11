@@ -1,5 +1,7 @@
 package com.paypal.user.service.impl;
 
+import com.paypal.user.client.WalletClient;
+import com.paypal.user.dto.CreateWalletRequest;
 import com.paypal.user.dto.UserDto;
 import com.paypal.user.entity.User;
 import com.paypal.user.exception.UserAlreadyExistsException;
@@ -10,43 +12,43 @@ import com.paypal.user.service.IUserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements IUserService{
 
     private UserRepo userRepo;
+    private final WalletClient walletClient;
 
-
-    public UserServiceImpl(UserRepo userRepo){
+    public UserServiceImpl(UserRepo userRepo, WalletClient walletClient){
         this.userRepo = userRepo;
+        this.walletClient = walletClient;
     }
 
+
+
     @Override
-    public void createUser(UserDto userDto) {
-        if (userRepo.findByEmail(userDto.getEmail()).isPresent()) {
-            throw new UserAlreadyExistsException(
-                    "User Already Registered with " + userDto.getEmail() + " email"
-            );
+    public User createUser(User user) {
+        User savedUser = userRepo.save(user);
+        try {
+            CreateWalletRequest request = new CreateWalletRequest();
+            request.setUserId(savedUser.getId());
+            request.setCurrency("INR");
+            walletClient.createWallet(request);
+        } catch (Exception ex) {
+            userRepo.deleteById(savedUser.getId()); // rollback
+            throw new RuntimeException("Wallet creation failed, user rolled back", ex);
         }
-        userRepo.save(UserMapper.mapToUser(userDto, new User()));
+        return savedUser;
     }
 
     @Override
-    public UserDto getUserById(Long id) {
-        User user = userRepo.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
-
-        return UserMapper.mapToUserDto(user, new UserDto());
+    public Optional<User> getUserById(Long id) {
+        return userRepo.findById(id);
     }
-
 
     @Override
-    public List<UserDto> getAllUsers() {
-        return userRepo.findAll()
-                .stream()
-                .map(user -> UserMapper.mapToUserDto(user, new UserDto()))
-                .toList(); // if using Java 16+, else collect(Collectors.toList())
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
     }
-
-
 }
